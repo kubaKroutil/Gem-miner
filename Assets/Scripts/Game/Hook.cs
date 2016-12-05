@@ -4,12 +4,13 @@ using System.Collections;
 public class Hook : MonoBehaviour {
 
     public Vector3 origin;
-    public float basereleaseSpeed = 4;
-    public float baseRetractSpeed = 4f;
-    public float variableRetractSpeed = 1f;
+    public bool release = false;
+
+    private float basereleaseSpeed = 4;
+    private float baseRetractSpeed = 4f;
+    private float variableRetractSpeed = 1f;
     private float retractSpeed { get { return baseRetractSpeed * variableRetractSpeed; } }
-    public bool release = false;   
-    public bool retracting = false;
+    private bool retracting = false;
     private bonus_bomb_button bombButton;
 
     void Start()
@@ -63,7 +64,6 @@ public class Hook : MonoBehaviour {
 
         if (this.transform.childCount > 0)
         {
-            Debug.Log("retract done, has child");
             this.transform.GetChild(0).gameObject.GetComponent<PickableItem>().OnCatch();
             LookForPickableItems();
         }

@@ -11,11 +11,7 @@ public class LevelButton : MonoBehaviour {
     public GameObject star2;
     public GameObject star3;
 
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
+
 	public void SetButton (int levelNum) {
         levelNumber.text = levelNum.ToString();
         if (PlayerPrefs.GetInt("Level" + levelNum) == 1)
@@ -28,7 +24,7 @@ public class LevelButton : MonoBehaviour {
 
     public void LoadScene(int lvlNum)
     {
-        SceneManager.LoadScene("Level"+lvlNum.ToString());
+        LoadingSceen.Instace.LoadLevel(lvlNum);
     }
 
     void TurnStarsOn(int starts)

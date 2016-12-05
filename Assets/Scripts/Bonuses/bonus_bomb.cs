@@ -4,7 +4,7 @@ using System.Collections;
 public class bonus_bomb : MonoBehaviour {
 
     private Transform target;
-    private float speed = 5f;
+    private float speed = 10f;
     private bool exploded = false;
 
 

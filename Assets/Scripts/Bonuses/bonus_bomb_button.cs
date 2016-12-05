@@ -23,11 +23,11 @@ public class bonus_bomb_button : MonoBehaviour {
 
     public void SpawnBomb()
     {
-        if (miner.claw.transform.childCount > 0 && Time.timeScale ==1 && bombs >=1 && canShoot)
+        if (miner.hook.transform.childCount > 0 && Time.timeScale ==1 && bombs >=1 && canShoot)
         {
             canShoot = false;
             GameObject bomb = (GameObject)Instantiate(bombPrefab, miner.transform.position, Quaternion.identity);
-            bomb.GetComponent<bonus_bomb>().SetTarget(miner.claw.transform.GetChild(0));
+            bomb.GetComponent<bonus_bomb>().SetTarget(miner.hook.transform.GetChild(0));
 
             bombs--;
             PowerUp_manager.Instace.ChangeBombsQuantity(-1);

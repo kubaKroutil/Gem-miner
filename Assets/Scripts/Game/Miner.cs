@@ -3,17 +3,17 @@ using System.Collections;
 
 public class Miner : MonoBehaviour {
     
-    public Hook claw;
-    public bool canShoot = true;
-    public Animator animator;
-    private LineRenderer lineRenderer;
+    public Hook hook;
 
+    private bool canShoot = true;
+    private Animator animator;
+    private LineRenderer lineRenderer;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         animator = GetComponent<Animator>();
-        claw = GetComponentInChildren<Hook>();
+        hook = GetComponentInChildren<Hook>();
     }
 
     void Update()
@@ -21,8 +21,8 @@ public class Miner : MonoBehaviour {
         if (!canShoot)
         {
             lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, claw.origin);
-            lineRenderer.SetPosition(1, claw.gameObject.transform.position);
+            lineRenderer.SetPosition(0, hook.origin);
+            lineRenderer.SetPosition(1, hook.gameObject.transform.position);
         }       
     }
 
@@ -33,9 +33,8 @@ public class Miner : MonoBehaviour {
         {
             canShoot = false;
             animator.speed = 0;
-            claw.release = true;
-        }
-        
+            hook.release = true;
+        }       
     }
 
     public void ClawIsBack()

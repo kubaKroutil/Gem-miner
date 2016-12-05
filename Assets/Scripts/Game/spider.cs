@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spider : MonoBehaviour {
-    public float speed = 3;
+public class spider : PickableItem {
+    private float speed = 3;
     private Vector3 targetRot;
     private bool goLeft = true;
+    private bool isHooked = false;
 
-    // Use this for initialization
     void Start () {
         targetRot = this.transform.rotation.eulerAngles;
 	}
 
-    // Update is called once per frame
     void Update() {
+        if (isHooked) return;
         if (goLeft)
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed, Space.World);
@@ -28,7 +28,8 @@ public class spider : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-       if (other.gameObject.tag != "Boundary") return;
+        if (other.gameObject.tag == "Player") isHooked = true;
+        if (other.gameObject.tag != "Boundary") return;
 
         goLeft = !goLeft;
         targetRot = transform.rotation.eulerAngles + new Vector3(180f, 0f, 0f);       

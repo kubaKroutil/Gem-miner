@@ -5,13 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LoadingSceen : MonoBehaviour {
-
+    public static LoadingSceen Instace = null;
     AsyncOperation AsOperation;
     public GameObject loadingBG;
     public Slider progressSlider;
     public Button startLevelButton;
 
 
+    void Start()
+    {
+        Instace = this;
+    }
     public void LoadLevel(int number)
     {
         loadingBG.SetActive(true);

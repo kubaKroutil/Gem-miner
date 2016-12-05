@@ -24,7 +24,7 @@ public class bonus_SuperStrength_button : MonoBehaviour {
         {
             quantity--;
             PowerUp_manager.Instace.ChangeSuperStrengthQuantity(-1);
-            miner.claw.ActivateSuperStrengthBonus();
+            miner.hook.ActivateSuperStrengthBonus();
             quantityDisplay.text = quantity.ToString();
         }
 	

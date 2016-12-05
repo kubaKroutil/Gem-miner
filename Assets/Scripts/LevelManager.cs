@@ -12,8 +12,7 @@ public class LevelManager : MonoBehaviour {
     public GameObject button;
 
     void Start() {
-        //DeleteAll();
-
+        Time.timeScale = 1;
         if (!PlayerPrefs.HasKey("FirstLog"))
         {
             FirstLogSetUp();
@@ -37,8 +36,6 @@ public class LevelManager : MonoBehaviour {
         PlayerPrefs.SetInt("FirstLog", 1);
         PlayerPrefs.SetInt("Level1", 1);
         PlayerPrefs.SetInt("Level2", 1);
-        PlayerPrefs.SetInt("Level" + 2.ToString() + "Stars",2);
-        
     }
 
     void DeleteAll()
