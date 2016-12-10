@@ -29,7 +29,6 @@ public class LevelButton : MonoBehaviour {
 
     void TurnStarsOn(int starts)
     {
-
         switch (starts)
         {
             case 0: break;
@@ -44,7 +43,6 @@ public class LevelButton : MonoBehaviour {
                 star2.SetActive(true);
                 star3.SetActive(true);
                 break;
-
         }
     }
 }

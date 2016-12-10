@@ -10,12 +10,12 @@ public class GameManager_level : MonoBehaviour {
     public int Score2Star;
     public int Score3Star;
     public Text scoreDosplay;
-    public Text timeDisplay;
+    
     public GameObject WinPanel;
     public GameObject LosePanel;
 
 
-    public float levelTime = 50f;
+    
     public int score = 0;
 
 
@@ -25,18 +25,7 @@ public class GameManager_level : MonoBehaviour {
         UpdateScore(0);
     }
 
-    void Update()
-    {
-        levelTime -= Time.deltaTime;
-        timeDisplay.text = ((int)levelTime).ToString();
-        if (levelTime < 0)
-        {
-            Time.timeScale = 0;
-            if (score >= Score1Star) LevelWin();
-            else LevelLose();
-        }
-
-    }
+    
 
 	public void UpdateScore (int addScore) {
         score += addScore;

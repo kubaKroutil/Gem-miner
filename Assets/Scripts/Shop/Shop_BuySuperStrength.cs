@@ -17,7 +17,7 @@ public class Shop_BuySuperStrength : MonoBehaviour {
 
     public void BuyStrength()
     {
-        PowerUp_manager.Instace.ChangeSuperStrengthQuantity(1);
-        PowerUp_manager.Instace.ChangeMoneyQuantity(-strengthCost);
+        //PowerUp_manager.Instace.ChangeSuperStrengthQuantity(1);
+        //PowerUp_manager.Instace.ChangeMoneyQuantity(-strengthCost);
     }
 }

@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class bonus_SuperStrength_button : MonoBehaviour {
 
     private Text quantityDisplay;
-    private Miner miner;
+    //private Miner miner;
     private int quantity;
 
 
 
     void Start()
     {
-        miner = GameObject.FindObjectOfType<Miner>();
+        //miner = GameObject.FindObjectOfType<Miner>();
         quantity = PlayerPrefs.GetInt("Strength");
         quantityDisplay = GetComponentInChildren<Text>();
         quantityDisplay.text = quantity.ToString();
@@ -23,8 +23,8 @@ public class bonus_SuperStrength_button : MonoBehaviour {
         if (quantity >= 1 && Time.timeScale == 1)
         {
             quantity--;
-            PowerUp_manager.Instace.ChangeSuperStrengthQuantity(-1);
-            miner.hook.ActivateSuperStrengthBonus();
+            //PowerUp_manager.Instace.ChangeSuperStrengthQuantity(-1);
+            //miner.Hook.ActivateSuperStrengthBonus();
             quantityDisplay.text = quantity.ToString();
         }
 	

@@ -15,7 +15,7 @@ public class Shop_BuyBomb : MonoBehaviour {
 	
 
 	public void BuyBomb () {
-        PowerUp_manager.Instace.ChangeBombsQuantity(1);
-        PowerUp_manager.Instace.ChangeMoneyQuantity(-bombCost);
+        //PowerUp_manager.Instace.ChangeBombsQuantity(1);
+        //PowerUp_manager.Instace.ChangeMoneyQuantity(-bombCost);
 	}
 }

@@ -26,7 +26,7 @@ public class bonus_bomb : MonoBehaviour {
         if (other.transform.gameObject == target.gameObject)
         {
             exploded = true;
-            GameObject.FindObjectOfType<Hook>().BombExploded();
+            //GameObject.FindObjectOfType<Hook>().BombExploded();
             Destroy(other.transform.gameObject);
             Transform explosion = transform.GetChild(0);
             explosion.gameObject.SetActive(true);               //explosion

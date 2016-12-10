@@ -5,86 +5,79 @@ public class Hook : MonoBehaviour {
 
     public Vector3 origin;
     public bool release = false;
+    public bool retracting = false;
+    
+    public HookSpeed hookSpeed;
 
-    private float basereleaseSpeed = 4;
-    private float baseRetractSpeed = 4f;
-    private float variableRetractSpeed = 1f;
-    private float retractSpeed { get { return baseRetractSpeed * variableRetractSpeed; } }
-    private bool retracting = false;
-    private bonus_bomb_button bombButton;
+
 
     void Start()
     {
         origin = transform.position;
-        bombButton = GameObject.FindObjectOfType<bonus_bomb_button>();
+        hookSpeed = new HookSpeed(HookSpeed.DefaultReleaseSpeed, HookSpeed.DefaultRetractSpeed);
+        //bombButton = GameObject.FindObjectOfType<bonus_bomb_button>();
+    }
+
+    void OnEnable()
+    {
+        GameManager.Instance.ReleaseHookEvent += ReleaseHook;
+        GameManager.Instance.RetractHookEvent += Retracting;
+        GameManager.Instance.RetractionDoneEvent += RetractionDone;
+    }
+
+    void OnDisable()
+    {
+        GameManager.Instance.ReleaseHookEvent -= ReleaseHook;
+        GameManager.Instance.RetractHookEvent -= Retracting;
+        GameManager.Instance.RetractionDoneEvent -= RetractionDone;
     }
 
     void Update() {
-        if (!release || Time.timeScale == 0) return;
+        if (!release) return;
         if (!retracting)
         {
-            transform.Translate(Vector3.down * Time.deltaTime * basereleaseSpeed);
+            transform.Translate(Vector3.down * Time.deltaTime * hookSpeed.ReleaseSpeed);
         }
-        else transform.Translate(Vector3.up * Time.deltaTime * retractSpeed);
+        else transform.Translate(Vector3.up * Time.deltaTime * hookSpeed.RetractSpeed);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void ReleaseHook()
     {
-        
-        if (other.gameObject.tag == "Player" && retracting)
-            {
-                other.gameObject.GetComponent<Miner>().ClawIsBack();
-                RetractionDone();
-                return;
-            }
-        if (other.gameObject.tag == "Pickable" && !retracting)
-        {
-            HookItem(other.gameObject.GetComponent<PickableItem>());
-        }
-        else if (other.gameObject.tag == "Boundary")
-        {
-            retracting = true;
-        }
+        release = true;
     }
 
-    void HookItem(PickableItem item)
+    private void Retracting()
     {
-        variableRetractSpeed *= item.speedMultiplier;
-        item.transform.SetParent(this.transform);
-        retracting = true;   
+        retracting = true;
     }
+   
 
-    void RetractionDone()
+
+    private void RetractionDone()
     {
         retracting = false;
         release = false;
         transform.position = origin;
-        variableRetractSpeed = 1f;
-        bombButton.canShoot = true;
+        hookSpeed.SetRetractSpeed(HookSpeed.DefaultRetractSpeed);
+        //bombButton.canShoot = true;
 
-        if (this.transform.childCount > 0)
-        {
-            this.transform.GetChild(0).gameObject.GetComponent<PickableItem>().OnCatch();
-            LookForPickableItems();
-        }
+        
     }
 
-    void LookForPickableItems()
-    {
-        GameObject[] pickables = GameObject.FindGameObjectsWithTag("Pickable");
-        if (pickables.Length == 1) GameManager_level.Instace.LevelWin();
-    }
-    public void ActivateSuperStrengthBonus()
-    {
-        baseRetractSpeed = 10;
-        basereleaseSpeed = 10;
-    }
 
-    public void BombExploded()
-    {
-        variableRetractSpeed = 1;
-        LookForPickableItems();
-    }
+   
 
-    
+
+    //public void ActivateSuperStrengthBonus()
+    //{
+    //    baseRetractSpeed = 10;
+    //    basereleaseSpeed = 10;
+    //}
+
+    //public void BombExploded()
+    //{
+    //    variableRetractSpeed = 1;
+    //}
+
+
 }
