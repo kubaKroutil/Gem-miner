@@ -7,18 +7,18 @@ public class HookLineRender : MonoBehaviour {
     private LineRenderer lineRenderer;
 
 
-    void Start()
+    private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    void Enable () {
+    private void OnEnable () {
         
         GameManager.Instance.ReleaseHookEvent += Toggle;
         GameManager.Instance.RetractionDoneEvent += Toggle;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         GameManager.Instance.ReleaseHookEvent -= Toggle;
         GameManager.Instance.RetractionDoneEvent -= Toggle;
@@ -33,7 +33,7 @@ public class HookLineRender : MonoBehaviour {
         }
     }
 
-    void Toggle()
+    private void Toggle()
         {           
                 lineRenderer.enabled = !lineRenderer.enabled;           
         }

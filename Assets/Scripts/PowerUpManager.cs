@@ -1,14 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PowerUpManager : MonoBehaviour {
 
-    private int bombs;
-    private int superStrength;
-    private int money;
-    private static PowerUpManager instance;
+    public delegate void EventHandler();
+
+    public event EventHandler BuyBombEvent;
+    public event EventHandler UseBombEvent;
+    public event EventHandler BombExplodeEvent;
+    public event EventHandler BuySuperStrenghtEvent;
+    public event EventHandler UseSuperStrenghtEvent;
+
+    public int bombsQuantity;
+    public int superStrengthQuantity;
+    public int money;
+    public bool bombUsed = false;
+    public bool superStrengthUsed = false;
+
     private static bool applicationIsQuitting = false;
+    private static PowerUpManager instance;
 
     public static PowerUpManager Instance
     {
@@ -39,34 +51,71 @@ public class PowerUpManager : MonoBehaviour {
     private void Awake ()
     {
             SetUp();
-	}
-
-    public void OnDestroy()
-    {
-        applicationIsQuitting = true;
+            SceneManager.sceneLoaded += OnLoadScene;
     }
 
-    void SetUp () {
-        bombs = PlayerPrefs.GetInt("Bombs");
-        superStrength = PlayerPrefs.GetInt("Strength");
+    void SetUp()
+    {
+        bombsQuantity = PlayerPrefs.GetInt("Bombs");
+        superStrengthQuantity = PlayerPrefs.GetInt("SuperStrength");
         money = PlayerPrefs.GetInt("Money");
     }
 
-    public void ChangeMoneyQuantity(int InOrDeCrease)
+    private void OnLoadScene(Scene scene, LoadSceneMode mode)           // new OnLevelLoad
     {
-        money += InOrDeCrease;
+        superStrengthUsed = false;
+    }
+    public void OnDestroy()
+    {
+        SavePlayerPrefs();
+        applicationIsQuitting = true;
+    }
+
+    private void SavePlayerPrefs()
+    {
         PlayerPrefs.SetInt("Money", money);
+        PlayerPrefs.SetInt("Bombs", bombsQuantity);
+        PlayerPrefs.SetInt("SuperStrength", superStrengthQuantity);
     }
 
-    public void ChangeBombsQuantity(int InOrDeCrease)
+
+    public void CallBuyBombEvent()
     {
-        bombs += InOrDeCrease;
-        PlayerPrefs.SetInt("Bombs", bombs);
+        if (BuyBombEvent != null)
+        {
+            BuyBombEvent();
+        }
     }
 
-    public void ChangeSuperStrengthQuantity(int InOrDeCrease)
+    public void CallUseBombEvent()
     {
-        superStrength += InOrDeCrease;
-        PlayerPrefs.SetInt("Strength", superStrength);
+        if (UseBombEvent != null)
+        {
+            UseBombEvent();
+        }
+    }
+
+    public void CallBombExplodeEvent()
+    {
+        if (BombExplodeEvent != null)
+        {
+            BombExplodeEvent();
+        }
+    }
+
+    public void CallBuySuperStrenghtEvent()
+    {
+        if (BuySuperStrenghtEvent != null)
+        {
+            BuySuperStrenghtEvent();
+        }
+    }
+
+    public void CallUseSuperStrenghtEvent()
+    {
+        if (UseSuperStrenghtEvent != null)
+        {
+            UseSuperStrenghtEvent();
+        }
     }
 }

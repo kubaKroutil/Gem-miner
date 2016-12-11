@@ -23,6 +23,8 @@ public class Hook : MonoBehaviour {
         GameManager.Instance.ReleaseHookEvent += ReleaseHook;
         GameManager.Instance.RetractHookEvent += Retracting;
         GameManager.Instance.RetractionDoneEvent += RetractionDone;
+        GameManager.Instance.RetractionDoneEvent += RestoreRetractSpeed;
+        PowerUpManager.Instance.BombExplodeEvent += RestoreRetractSpeed;
     }
 
     private void OnDisable()
@@ -30,6 +32,8 @@ public class Hook : MonoBehaviour {
         GameManager.Instance.ReleaseHookEvent -= ReleaseHook;
         GameManager.Instance.RetractHookEvent -= Retracting;
         GameManager.Instance.RetractionDoneEvent -= RetractionDone;
+        GameManager.Instance.RetractionDoneEvent -= RestoreRetractSpeed;
+        PowerUpManager.Instance.BombExplodeEvent -= RestoreRetractSpeed;
     }
 
     private void Update() {
@@ -56,20 +60,12 @@ public class Hook : MonoBehaviour {
         retracting = false;
         release = false;
         transform.position = origin;
-        hookSpeed.SetRetractSpeed(HookSpeed.DefaultRetractSpeed);
+        
         if (catchedItem) catchedItem.IncreaseScoreAndDestroy();       
     }
 
-    //public void ActivateSuperStrengthBonus()
-    //{
-    //    baseRetractSpeed = 10;
-    //    basereleaseSpeed = 10;
-    //}
-
-    //public void BombExploded()
-    //{
-    //    variableRetractSpeed = 1;
-    //}
-
-
+    private void RestoreRetractSpeed()
+    {
+        if (!PowerUpManager.Instance.superStrengthUsed) hookSpeed.SetRetractSpeed(HookSpeed.DefaultRetractSpeed);
+    }
 }
