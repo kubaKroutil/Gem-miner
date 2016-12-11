@@ -3,11 +3,12 @@ using System.Collections;
 
 public class PickableItem : MonoBehaviour {
 
-    public float speedMultiplier;
+    public float itemSpeed;
     public int itemValue;
 
-	public void OnCatch () {
-        GameManager_level.Instace.UpdateScore(itemValue);
-        Destroy(this.gameObject);
+    public void IncreaseScoreAndDestroy()
+    {
+            GameManager.Instance.levelScore += GameManager.Instance.hook.catchedItem.itemValue;
+            Destroy(this.gameObject);
     }
 }

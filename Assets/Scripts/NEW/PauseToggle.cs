@@ -7,14 +7,14 @@ public class PauseToggle : MonoBehaviour {
     public GameObject UIPausePanel;
     public bool isPaused = false;
 
-    void OnEnable()
+    private void OnEnable()
     {
         GameManager.Instance.PauseGameEvent += Pause;
         GameManager.Instance.PauseGameEvent += TogglePausePanel;
         GameManager.Instance.GameOverEvent += Pause;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         GameManager.Instance.PauseGameEvent -= TogglePausePanel;
         GameManager.Instance.PauseGameEvent -= Pause;

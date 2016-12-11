@@ -2,27 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class LevelScore : MonoBehaviour {
 
-    public Text scoreDosplay;
-    public int score = 0;
+    public Text scoreDisplay;
+    public int score1Star;
+    public int score2Star;
+    public int score3Star;
 
-    void OnEnable()
+    public GameObject winPanel;
+    public GameObject losePanel;
+
+    private void OnEnable()
     {
-        GameManager.Instance.RetractionDoneEvent += LookForCatch;
+        GameManager.Instance.GameOverEvent += CheckHighscore;
+        GameManager.Instance.GameOverEvent += CheckScore;
+        GameManager.Instance.RetractionDoneEvent += UpdateScore;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        GameManager.Instance.RetractionDoneEvent -= LookForCatch;
+        GameManager.Instance.GameOverEvent -= CheckHighscore;
+        GameManager.Instance.GameOverEvent -= CheckScore;
+        GameManager.Instance.RetractionDoneEvent -= UpdateScore;
     }
 
-    private void LookForCatch()
+    private void UpdateScore()
     {
-        if (GameManager.Instance.hook.transform.childCount > 0)
+        scoreDisplay.text = GameManager.Instance.levelScore.ToString();
+    }
+
+    private void CheckScore()
+    {
+        if (GameManager.Instance.levelScore >= score1Star) LevelWon();
+        else LevelLost();
+    }
+
+    private void LevelWon()
+    {
+        winPanel.SetActive(!winPanel.activeSelf);
+        if (GameManager.Instance.levelScore >= score3Star) winPanel.GetComponent<WinPanel>().TurnStarsOn(3);
+        else if (GameManager.Instance.levelScore >= score2Star) winPanel.GetComponent<WinPanel>().TurnStarsOn(2);
+        else winPanel.GetComponent<WinPanel>().TurnStarsOn(1);
+    }
+
+    private void LevelLost()
+    {
+        losePanel.SetActive(!winPanel.activeSelf);
+    }
+
+    public void CheckHighscore()
+    {
+        int levelHighscore = PlayerPrefs.GetInt(SceneManager.GetActiveScene().name.ToString() + "Highscore");
+        if (GameManager.Instance.levelScore > levelHighscore)
         {
-            GameManager.Instance.hook.transform.GetChild(0).gameObject.GetComponent<PickableItem>().OnCatch();
-        }
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name.ToString() + "Highscore", GameManager.Instance.levelScore);            
+        }      
     }
 }

@@ -27,7 +27,8 @@ public class HookCollisions : MonoBehaviour {
 
     private void HookItem(PickableItem item)
     {
-        GameManager.Instance.hook.hookSpeed.SetRetractSpeed(item.speedMultiplier);
+        GameManager.Instance.hook.hookSpeed.SetRetractSpeed(item.itemSpeed);
         item.transform.SetParent(this.transform);
+        GameManager.Instance.hook.catchedItem = item;
     }
 }

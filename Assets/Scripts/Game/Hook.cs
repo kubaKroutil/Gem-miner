@@ -5,34 +5,34 @@ public class Hook : MonoBehaviour {
 
     public Vector3 origin;
     public bool release = false;
-    public bool retracting = false;
-    
+    public bool retracting = false;   
     public HookSpeed hookSpeed;
+    public PickableItem catchedItem;
 
 
 
-    void Start()
+    private void Start()
     {
         origin = transform.position;
         hookSpeed = new HookSpeed(HookSpeed.DefaultReleaseSpeed, HookSpeed.DefaultRetractSpeed);
         //bombButton = GameObject.FindObjectOfType<bonus_bomb_button>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         GameManager.Instance.ReleaseHookEvent += ReleaseHook;
         GameManager.Instance.RetractHookEvent += Retracting;
         GameManager.Instance.RetractionDoneEvent += RetractionDone;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         GameManager.Instance.ReleaseHookEvent -= ReleaseHook;
         GameManager.Instance.RetractHookEvent -= Retracting;
         GameManager.Instance.RetractionDoneEvent -= RetractionDone;
     }
 
-    void Update() {
+    private void Update() {
         if (!release) return;
         if (!retracting)
         {
@@ -50,8 +50,6 @@ public class Hook : MonoBehaviour {
     {
         retracting = true;
     }
-   
-
 
     private void RetractionDone()
     {
@@ -59,14 +57,8 @@ public class Hook : MonoBehaviour {
         release = false;
         transform.position = origin;
         hookSpeed.SetRetractSpeed(HookSpeed.DefaultRetractSpeed);
-        //bombButton.canShoot = true;
-
-        
+        if (catchedItem) catchedItem.IncreaseScoreAndDestroy();       
     }
-
-
-   
-
 
     //public void ActivateSuperStrengthBonus()
     //{

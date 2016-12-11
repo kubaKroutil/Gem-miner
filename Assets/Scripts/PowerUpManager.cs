@@ -2,49 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp_manager : MonoBehaviour {
+public class PowerUpManager : MonoBehaviour {
 
-
-    private int Bombs;
-    private int SuperStrength;
+    private int bombs;
+    private int superStrength;
     private int money;
-    private static PowerUp_manager instance;
-    
+    private static PowerUpManager instance;
+    private static bool applicationIsQuitting = false;
 
-    public static PowerUp_manager Instance
+    public static PowerUpManager Instance
     {
         get
         {
+            if (applicationIsQuitting) return null;
             if (instance == null)
             {
-                PowerUp_manager[] instances = GameObject.FindObjectsOfType<PowerUp_manager>();
+                PowerUpManager[] instances = GameObject.FindObjectsOfType<PowerUpManager>();
 
                 if (instances.Length == 1) instance = instances[0];
                 else
                 {
-                    foreach (PowerUp_manager gm in instances)               // If theres 0 or 2 or more PowerUp Managers
+                    foreach (PowerUpManager gm in instances)               // If theres 0 or 2 or more PowerUp Managers
                     {
                         Destroy(gm.gameObject);                         // Destroy all Game Managers
                     }
                     GameObject singleton = new GameObject();            // And create new one
                     singleton.name = "PowerUpSingleton";
-                    instance = singleton.AddComponent<PowerUp_manager>();
+                    instance = singleton.AddComponent<PowerUpManager>();
                 }
                 DontDestroyOnLoad(instance.gameObject);
             }
             return instance;
         }
     }
-    void Awake () {
-        
+
+    private void Awake ()
+    {
             SetUp();
-            DontDestroyOnLoad(this);
-  
 	}
 
+    public void OnDestroy()
+    {
+        applicationIsQuitting = true;
+    }
+
     void SetUp () {
-        Bombs = PlayerPrefs.GetInt("Bombs");
-        SuperStrength = PlayerPrefs.GetInt("Strength");
+        bombs = PlayerPrefs.GetInt("Bombs");
+        superStrength = PlayerPrefs.GetInt("Strength");
         money = PlayerPrefs.GetInt("Money");
     }
 
@@ -56,13 +60,13 @@ public class PowerUp_manager : MonoBehaviour {
 
     public void ChangeBombsQuantity(int InOrDeCrease)
     {
-        Bombs += InOrDeCrease;
-        PlayerPrefs.SetInt("Bombs", Bombs);
+        bombs += InOrDeCrease;
+        PlayerPrefs.SetInt("Bombs", bombs);
     }
 
     public void ChangeSuperStrengthQuantity(int InOrDeCrease)
     {
-        SuperStrength += InOrDeCrease;
-        PlayerPrefs.SetInt("Strength", SuperStrength);
+        superStrength += InOrDeCrease;
+        PlayerPrefs.SetInt("Strength", superStrength);
     }
 }

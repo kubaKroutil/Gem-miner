@@ -8,7 +8,7 @@ public class Shop_BuySuperStrength : MonoBehaviour {
     private int strengthCost = 150;
     private Text strengthCostDisplay;
 
-    void Start()
+    private void Start()
     {
         strengthCostDisplay = GetComponentInChildren<Text>();
         strengthCostDisplay.text = strengthCost.ToString();

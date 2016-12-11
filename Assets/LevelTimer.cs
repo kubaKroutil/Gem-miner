@@ -19,7 +19,4 @@ public class LevelTimer : MonoBehaviour {
             GameManager.Instance.CallGameOverEvent();
         }
     }
-
-
-
 }

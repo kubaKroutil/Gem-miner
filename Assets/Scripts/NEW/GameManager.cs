@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager instance;
     private static bool applicationIsQuitting = false;
+    public int levelScore = 0;
     public Hook hook;
     public bool isGameOver = false;
+    
 
     public static GameManager Instance
     {
@@ -46,17 +48,18 @@ public class GameManager : MonoBehaviour {
     }
     private void Awake()                                                                // every time scene load do this...
     {
-        SceneManager.sceneLoaded += FindHook;
-
-
+        SceneManager.sceneLoaded += OnLoadScene;
     }
-    private void FindHook(Scene scene, LoadSceneMode mode)
+    private void OnLoadScene(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex !=0)                                                      // if you are not in menu
         {
             hook = GameObject.FindGameObjectWithTag("Player").GetComponent<Hook>();   // Hook reference
         }
         isGameOver = false;
+        levelScore = 0;
+        Time.timeScale = 1;
+
     }
 
     public void CallPauseGameEvent()

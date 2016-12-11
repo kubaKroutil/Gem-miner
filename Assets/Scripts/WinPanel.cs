@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WinPanel : MonoBehaviour {
@@ -11,17 +12,16 @@ public class WinPanel : MonoBehaviour {
     public GameObject star2;
     public GameObject star3;
 
-	
-	void OnEnable () {
-        TurnStarsOn(GameManager_level.Instace.ReachedStars());
-        scoreDisplay.text += GameManager_level.Instace.score.ToString();
-        HighscoreDisplay.text += GameManager_level.Instace.GetHighscore();
-        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + GameManager_level.Instace.score);
+
+    private void OnEnable () {
+        scoreDisplay.text += GameManager.Instance.levelScore.ToString();
+        HighscoreDisplay.text += PlayerPrefs.GetInt(SceneManager.GetActiveScene().name.ToString() + "Highscore").ToString();
+        //PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + GameManager_level.Instace.score);
     }
 
-    void TurnStarsOn(int starts)
+    public void TurnStarsOn(int stars)
     {
-        switch (starts)
+        switch (stars)
         {
             case 0: break;
             case 1:
