@@ -30,5 +30,10 @@ public class HookCollisions : MonoBehaviour {
         if (!PowerUpManager.Instance.superStrengthUsed) GameManager.Instance.hook.hookSpeed.SetRetractSpeed(item.itemSpeed);
         item.transform.SetParent(this.transform);
         GameManager.Instance.hook.catchedItem = item;
+
+        if (item is Spider)
+        {
+            item.GetComponent<Spider>().Hooked();
+        }
     }
 }

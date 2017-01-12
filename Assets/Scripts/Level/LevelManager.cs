@@ -11,17 +11,11 @@ public class LevelManager : MonoBehaviour {
     
     public GameObject button;
 
-    void Start() {
-        Time.timeScale = 1;
-        if (!PlayerPrefs.HasKey("FirstLog"))
-        {
-            FirstLogSetUp();
-        }
-
+    private void Start() {
         CreateLevelButtons();
 	}
-	
-	void CreateLevelButtons () {
+
+    private void CreateLevelButtons () {
         for (int i = 1; i <= numberOfLevels; i++)
 
         {
@@ -30,18 +24,4 @@ public class LevelManager : MonoBehaviour {
             newButton.GetComponent<LevelButton>().SetButton(i);
         }
 	}
-
-    void FirstLogSetUp()
-    {
-        PlayerPrefs.SetInt("FirstLog", 1);
-        PlayerPrefs.SetInt("Level1", 1);
-        PlayerPrefs.SetInt("Level2", 1);
-    }
-
-    void DeleteAll()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-
-   
 }

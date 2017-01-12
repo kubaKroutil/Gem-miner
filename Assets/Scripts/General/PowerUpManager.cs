@@ -50,11 +50,17 @@ public class PowerUpManager : MonoBehaviour {
 
     private void Awake ()
     {
-            SetUp();
+        //DeleteAll();
+        Time.timeScale = 1;
+        if (!PlayerPrefs.HasKey("FirstLog"))
+        {
+            FirstLogSetUp();
+        }
+        SetUp();
             SceneManager.sceneLoaded += OnLoadScene;
     }
 
-    void SetUp()
+    private void SetUp()
     {
         bombsQuantity = PlayerPrefs.GetInt("Bombs");
         superStrengthQuantity = PlayerPrefs.GetInt("SuperStrength");
@@ -78,6 +84,19 @@ public class PowerUpManager : MonoBehaviour {
         PlayerPrefs.SetInt("SuperStrength", superStrengthQuantity);
     }
 
+    private void FirstLogSetUp()
+    {
+        PlayerPrefs.SetInt("FirstLog", 1);
+        PlayerPrefs.SetInt("Level1", 1);
+        PlayerPrefs.SetInt("Money", 2000);
+        PlayerPrefs.SetInt("Bombs", 1);
+        PlayerPrefs.SetInt("SuperStrength", 1);
+    }
+
+    private void DeleteAll()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     public void CallBuyBombEvent()
     {

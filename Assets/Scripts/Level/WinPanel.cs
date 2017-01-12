@@ -16,11 +16,17 @@ public class WinPanel : MonoBehaviour {
     private void OnEnable () {
         scoreDisplay.text += GameManager.Instance.levelScore.ToString();
         HighscoreDisplay.text += PlayerPrefs.GetInt(SceneManager.GetActiveScene().name.ToString() + "Highscore").ToString();
-        //PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + GameManager_level.Instace.score);
     }
 
     public void TurnStarsOn(int stars)
     {
+        string level = SceneManager.GetActiveScene().name;
+
+        if (stars > PlayerPrefs.GetInt(level + "Stars"))
+        {
+            PlayerPrefs.SetInt(level + "Stars", stars);
+        }
+        
         switch (stars)
         {
             case 0: break;

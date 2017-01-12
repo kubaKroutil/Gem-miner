@@ -13,14 +13,12 @@ public class GameManager : MonoBehaviour {
     public event EventHandler RetractionDoneEvent;
     public event EventHandler GameOverEvent;
 
-
     private static GameManager instance;
     private static bool applicationIsQuitting = false;
     public int levelScore = 0;
     public Hook hook;
     public bool isGameOver = false;
     
-
     public static GameManager Instance
     {
         get

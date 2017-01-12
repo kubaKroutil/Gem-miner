@@ -15,6 +15,12 @@ public class LevelScore : MonoBehaviour {
     public GameObject winPanel;
     public GameObject losePanel;
 
+    private void Start()
+    {
+        string level = SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetInt(level , 1);
+    }
+
     private void OnEnable()
     {
         GameManager.Instance.GameOverEvent += CheckHighscore;
@@ -42,6 +48,7 @@ public class LevelScore : MonoBehaviour {
 
     private void LevelWon()
     {
+        PowerUpManager.Instance.money += GameManager.Instance.levelScore;
         winPanel.SetActive(!winPanel.activeSelf);
         if (GameManager.Instance.levelScore >= score3Star) winPanel.GetComponent<WinPanel>().TurnStarsOn(3);
         else if (GameManager.Instance.levelScore >= score2Star) winPanel.GetComponent<WinPanel>().TurnStarsOn(2);
@@ -50,7 +57,7 @@ public class LevelScore : MonoBehaviour {
 
     private void LevelLost()
     {
-        losePanel.SetActive(!winPanel.activeSelf);
+        losePanel.SetActive(!losePanel.activeSelf);
     }
 
     public void CheckHighscore()
