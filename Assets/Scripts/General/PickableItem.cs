@@ -11,4 +11,9 @@ public class PickableItem : MonoBehaviour {
             GameManager.Instance.levelScore += GameManager.Instance.hook.catchedItem.itemValue;
             Destroy(this.gameObject);
     }
+
+    public virtual void OnHook()
+    {
+        //Debug.Log(this.gameObject.name);
+    }
 }

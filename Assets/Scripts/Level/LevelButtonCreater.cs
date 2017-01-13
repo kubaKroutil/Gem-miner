@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour {
+public class LevelButtonCreater : MonoBehaviour {
 
     public int numberOfLevels;
     public Transform buttonParent;

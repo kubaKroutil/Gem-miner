@@ -9,13 +9,17 @@ public class Hook : MonoBehaviour {
     public HookSpeed hookSpeed;
     public PickableItem catchedItem;
 
+    private LineRenderer lineRenderer;
+
 
 
     private void Start()
     {
         origin = transform.position;
         hookSpeed = new HookSpeed(HookSpeed.DefaultReleaseSpeed, HookSpeed.DefaultRetractSpeed);
-        //bombButton = GameObject.FindObjectOfType<bonus_bomb_button>();
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, GameManager.Instance.hook.origin);
+
     }
 
     private void OnEnable()
@@ -23,7 +27,6 @@ public class Hook : MonoBehaviour {
         GameManager.Instance.ReleaseHookEvent += ReleaseHook;
         GameManager.Instance.RetractHookEvent += Retracting;
         GameManager.Instance.RetractionDoneEvent += RetractionDone;
-        GameManager.Instance.RetractionDoneEvent += RestoreRetractSpeed;
         PowerUpManager.Instance.BombExplodeEvent += RestoreRetractSpeed;
     }
 
@@ -32,7 +35,6 @@ public class Hook : MonoBehaviour {
         GameManager.Instance.ReleaseHookEvent -= ReleaseHook;
         GameManager.Instance.RetractHookEvent -= Retracting;
         GameManager.Instance.RetractionDoneEvent -= RetractionDone;
-        GameManager.Instance.RetractionDoneEvent -= RestoreRetractSpeed;
         PowerUpManager.Instance.BombExplodeEvent -= RestoreRetractSpeed;
     }
 
@@ -43,6 +45,7 @@ public class Hook : MonoBehaviour {
             transform.Translate(Vector3.down * Time.deltaTime * hookSpeed.ReleaseSpeed);
         }
         else transform.Translate(Vector3.up * Time.deltaTime * hookSpeed.RetractSpeed);
+        lineRenderer.SetPosition(1, this.transform.position);
     }
 
     private void ReleaseHook()
@@ -60,8 +63,8 @@ public class Hook : MonoBehaviour {
         retracting = false;
         release = false;
         transform.position = origin;
-        
-        if (catchedItem) catchedItem.IncreaseScoreAndDestroy();       
+        if (catchedItem) catchedItem.IncreaseScoreAndDestroy();
+        RestoreRetractSpeed();
     }
 
     private void RestoreRetractSpeed()

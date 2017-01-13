@@ -34,7 +34,7 @@ public class Spider : PickableItem {
         targetRot = transform.rotation.eulerAngles + new Vector3(180f, 0f, 0f);       
     }
 
-    public void Hooked()
+    public override void OnHook()
     {
         isHooked = true;
     }

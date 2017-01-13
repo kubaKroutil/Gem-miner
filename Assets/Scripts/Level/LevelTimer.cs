@@ -14,7 +14,7 @@ public class LevelTimer : MonoBehaviour {
         if (GameManager.Instance.isGameOver) return;
         levelTime -= Time.deltaTime;
         timeDisplay.text = ((int)levelTime).ToString();
-        if (levelTime < 0)
+        if (levelTime <= 0)
         {
             GameManager.Instance.CallGameOverEvent();
         }
